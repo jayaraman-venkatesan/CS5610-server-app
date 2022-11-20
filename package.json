@@ -1,0 +1,19 @@
+{
+  "name": "cs5610-server-app",
+  "version": "1.0.0",
+  "description": "server app for web project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayaraman1998/CS5610-server-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jayaraman1998/CS5610-server-app/issues"
+  },
+  "homepage": "https://github.com/jayaraman1998/CS5610-server-app#readme"
+}
