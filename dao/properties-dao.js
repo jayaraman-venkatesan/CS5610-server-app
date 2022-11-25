@@ -11,6 +11,9 @@ export const findAllProperties = async () => {
     return properties
 }
 
+export const findPropertyByPropertyId = async (pid) =>
+    await propertiesModel.find({_id:pid})
+
 export const findPropertyByUsername = async (username) =>
     await propertiesModel.findOne({username})
 
