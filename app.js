@@ -26,5 +26,4 @@ app.use(express.json());
 HomeController(app);
 AdminController(app);
 PropertyController(app);
-
 app.listen(4000);

@@ -1,13 +1,28 @@
 import propertiesModel from "../models/property-model.js";
 
-export const findProperties = () => propertiesModel.find();
 
-export const findPropertiesByStatus = (s) => propertiesModel.find({status: s});
+export const findPropertiesByStatus = async (s) => await propertiesModel.find({status: s});
 
-export const findPropertiesByOwnerId = (s) => propertiesModel.find({owner: s});
-
+export const findPropertiesByOwnerId = async (s) => await propertiesModel.find({owner: s});
 
 
-// export const createTuit = (tuit) => propertiesModel.create(tuit);
-// export const deleteTuit = (tid) => propertiesModel.deleteOne({ _id: tid });
-// export const updateTuit = (tid, tuit) => propertiesModel.updateOne({ _id: tid }, { $set: tuit })
+export const findAllProperties = async () => {
+    const properties = await propertiesModel.find()
+    return properties
+}
+
+export const findPropertyByUsername = async (username) =>
+    await propertiesModel.findOne({username})
+
+export const createProperty = async (property) => {
+    const actualInsertedProperty = await propertiesModel.create(property)
+    return actualInsertedProperty
+}
+export const deleteProperty = async (pid) => {
+    const status = await propertiesModel.deleteOne({_id: pid})
+    return status
+}
+
+export const updateProperty = async (pid, userUpdates) =>
+    await propertiesModel.updateOne({_id: pid},
+                                    {$set: userUpdates})
