@@ -1,0 +1,53 @@
+[
+    {
+      "_id": 123,
+      "name": "463, Park Drive",
+      "city": "Boston, MA",
+      "state": "MA",
+      "cost": "$30",
+      "image": "room.jpg",
+      "rating":"5"
+    },
+
+    {
+        "_id": 124,
+        "name": "463, Park Drive",
+        "city": "Boston, MA",
+        "state": "MA",
+        "cost": "$30",
+        "image": "room.jpg",
+        "rating":"4"
+      },
+
+      {
+        "_id": 125,
+        "name": "463, Park Drive",
+        "city": "Boston, MA",
+        "state": "MA",
+        "cost": "$30",
+        "image": "room.jpg",
+        "rating":"2"
+      },
+
+      {
+          "_id": 126,
+          "name": "463, Park Drive",
+          "city": "Boston, MA",
+          "state": "MA",
+          "cost": "$30",
+          "image": "room.jpg",
+          "rating":"4"
+        },
+  
+        {
+          "_id": 127,
+          "name": "xyz",
+          "city": "Boston, MA",
+          "state": "MA",
+          "cost": "$30",
+          "image": "room.jpg",
+          "rating":"2"
+        }
+
+    
+]
