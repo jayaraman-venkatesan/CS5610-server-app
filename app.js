@@ -1,22 +1,30 @@
 import express from 'express';
+import mongoose from "mongoose";
 
 import cors from 'cors'
 
-import HomeController
-  from "./controllers/home/home-controller.js"
+import HomeController from "./controllers/home/home-controller.js"
+import AdminController from './controllers/admin/admin-request.js';
+import PropertyController from "./controllers/PropertyController/properties-controller.js";
 
-  import AdminController from './controllers/admin/admin-request.js';
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  autoIndex: false,
+  maxPoolSize: 10,
+  socketTimeoutMS: 45000,
+  family: 4
+}
 
+mongoose.connect('mongodb://localhost:27017/OnlinePropertySearch', options)
 
 const app = express()
 
 app.use(cors())
 app.use(express.json());
-
 HomeController(app);
-
 AdminController(app);
-
-
+PropertyController(app);
 
 app.listen(4000);
