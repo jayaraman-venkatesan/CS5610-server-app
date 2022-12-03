@@ -40,7 +40,7 @@ const HomeController = (app) => {
       return;
    } else if (userRes[0].role === 'Admin'){
       console.log("here 2");
-      props = await propertiesDao.findProperties();
+      props = await propertiesDao.findAllProperties();
       res.json(props);
       return
    } else {

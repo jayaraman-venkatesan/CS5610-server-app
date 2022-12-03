@@ -7,7 +7,6 @@ const schema = mongoose.Schema(
         dateOfBirth: String,
         firstName: String,
         handle: String,
-        id: String,
         lastName: String,
         profImg: String,
         role: String

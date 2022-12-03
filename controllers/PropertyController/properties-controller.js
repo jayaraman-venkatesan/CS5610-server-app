@@ -1,6 +1,14 @@
 import * as propertiesDao from '../../dao/properties-dao.js';
 
 const PropertyController = (app) =>{
+    app.post('/api/property', createProperty);
+    app.get('/api/property', findAllProperties);
+    app.get('/api/property/:pid', findPropertyByPropertyId);
+    app.put('/api/property/:pid', updateProperty);
+    app.delete('/api/property/:pid', deleteProperty);
+}
+
+
 
     const createProperty = async (req, res) => {
         const newProperty=req.body;
@@ -26,17 +34,16 @@ const PropertyController = (app) =>{
     }
 
     const findPropertyByPropertyId = async(req,res) =>{
+        console.log("skngbskg")
         const pid = req.params.pid
         const property = await propertiesDao.findPropertyByPropertyId(pid)
+        const products=getAllAPIProperty("https://dummyjson.com/docs/products")
+        console.log(property)
         res.json(property)
     }
-    app.post('/api/property', createProperty);
-    app.get('/api/property', findAllProperties);
-    app.get('/api/property/:pid', findPropertyByPropertyId);
-    app.put('/api/property/:pid', updateProperty);
-    app.delete('/api/property/:pid', deleteProperty);
 
-}
+
+
 
 
 export default PropertyController;

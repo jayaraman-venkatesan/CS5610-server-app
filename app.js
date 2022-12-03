@@ -5,7 +5,7 @@ import cors from 'cors'
 
 import HomeController from "./controllers/home/home-controller.js"
 import AdminController from './controllers/admin/admin-request.js';
-import PropertyController from "./controllers/PropertyController/properties-controller.js";
+import ProductController from "./controllers/ProductController/product-controller.js";
 
 const options = {
   useNewUrlParser: true,
@@ -25,5 +25,5 @@ app.use(cors())
 app.use(express.json());
 HomeController(app);
 AdminController(app);
-PropertyController(app);
+ProductController(app);
 app.listen(4000);
