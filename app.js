@@ -5,7 +5,7 @@ import cors from 'cors'
 
 import HomeController from "./controllers/home/home-controller.js"
 import AdminController from './controllers/admin/admin-request.js';
-import ProductController from "./controllers/ProductController/product-controller.js";
+import ProductController from "./controllers/ProductController/products-controller.js";
 
 const options = {
   useNewUrlParser: true,
