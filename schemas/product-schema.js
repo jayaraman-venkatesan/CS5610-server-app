@@ -12,11 +12,15 @@ const schema = mongoose.Schema(
         brand: String,
         category: String,
         thumbnail: String,
-        images:{
-            type:String,
-        },
+        images: [{
+            type: String
+        }],
         owner: String,
-        status: String
+        status: {
+            type: String,
+            enum: ['Approved', 'Rejected', 'Pending'],
+            default: 'user'
+        },
     },
     {
         collection: 'products_info'

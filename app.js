@@ -17,7 +17,7 @@ const options = {
   family: 4
 }
 
-mongoose.connect('mongodb://localhost:27017/OnlinePropertySearch', options)
+mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
 
 const app = express()
 

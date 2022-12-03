@@ -1,19 +1,19 @@
 export default [
     {
-        "req_id":"REQ893284823",
-        "propertyID": 8907783,
+        "req_id": "REQ893284823",
+        "productID": 8907783,
         "owner": "abc",
-        "PropertyName": "Khoury",
+        "ProductName": "Khoury",
         "Location": "Boston",
-        "date":"22/11/2022"
+        "date": "22/11/2022"
     },
     {
-        "req_id":"REQ23498843",
-        "propertyID": 124,
+        "req_id": "REQ23498843",
+        "productID": 124,
         "owner": "xyz",
-        "PropertyName": "Ell hall",
+        "ProductName": "Ell hall",
         "Location": "Boston",
-        "date":"25/11/2022"
+        "date": "25/11/2022"
     }
 
 ]

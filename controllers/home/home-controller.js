@@ -1,55 +1,40 @@
-import * as propertiesDao from '../../dao/properties-dao.js';
-import * as usersDao from '../../dao/users-dao.js'
+import * as productsDao from '../../dao/products-dao.js';
+import * as usersDao from '../../dao/users-dao.js';
+import axios from 'axios';
 
 
 const HomeController = (app) => {
-    app.get('/api/properties', getProperties)
- }
+   app.get('/api/products', getProducts)
+}
 
- 
- const getProperties =async (req, res) => {
 
-   const {user}=req.query;
+const getProducts = async (req, res) => {
+
+   const { user } = req.query;
    const userRes = await usersDao.findUserById(user);
 
    let props = [{}]
 
    // switch(userRes.role){
    //    case 'Admin': 
-   //    props = await propertiesDao.find();
+   //    props = await productsDao.find();
    //    res.json(props);
    //    return
    //    break;
    //    case 'owner': 
-   //    props = await propertiesDao.findPropertiesByOwnerId(user);
+   //    props = await productsDao.findProductsByOwnerId(user);
    //    res.json(props);
    //    break;
    //    default: 
-   //     props = await propertiesDao.findPropertiesByStatus("approved");
+   //     props = await productsDao.findProductsByStatus("approved");
    //    res.json(props);
    //    break;
-      
+
    // }
+   const productsFromDb = await productsDao.findAllProducts();
+   const { data: onlineProducts } = await axios.get("https://mocki.io/v1/3dac7535-7824-40a4-825e-948124e70222");
+   res.json([...onlineProducts, ...productsFromDb]);
 
-   if(userRes[0].role === 'owner'){
-      props = await propertiesDao.findPropertiesByOwnerId(user);
-      console.log(props);
-      console.log(user);
-      console.log("here 1");
-      res.json(props);
-      return;
-   } else if (userRes[0].role === 'Admin'){
-      console.log("here 2");
-      props = await propertiesDao.findAllProperties();
-      res.json(props);
-      return
-   } else {
-      console.log("here 3");
-      console.log(userRes);
-      props = await propertiesDao.findPropertiesByStatus("approved");
-      res.json(props);  
-   }
- }
+}
 
- export default HomeController
- 
+export default HomeController
