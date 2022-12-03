@@ -3,13 +3,13 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.Schema(
     {
-        _id: String,
-        dateOfBirth: String,
+
         firstName: String,
-        handle: String,
-        id: String,
+        _id: String,
         lastName: String,
-        profImg: String,
+        userName: String,
+        password: String,
+        email: String,
         role: String
     },
     {
@@ -19,3 +19,6 @@ const schema = mongoose.Schema(
 
 export default schema;
 
+//handle: String,
+//dateOfBirth: String,
+//profImg: String,
