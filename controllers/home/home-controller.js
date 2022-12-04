@@ -10,7 +10,7 @@ const HomeController = (app) => {
 
 const getProducts = async (req, res) => {
 
-   const { user } = req.query;
+   const { user, category } = req.query;
    const userRes = await usersDao.findUserById(user);
 
    let props = [{}]
@@ -32,8 +32,12 @@ const getProducts = async (req, res) => {
 
    // }
    const productsFromDb = await productsDao.findAllProducts();
-   const { data: onlineProducts } = await axios.get("https://mocki.io/v1/3dac7535-7824-40a4-825e-948124e70222");
-   res.json([...onlineProducts, ...productsFromDb]);
+   const API = !!category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products";
+   axios.get("https://dummyjson.com/products")
+      .then(function (response) {
+         console.log(response.data); // ex.: { user: 'Your User'}
+         res.json(response.data);
+      });
 
 }
 
