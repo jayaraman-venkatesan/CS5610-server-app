@@ -13,4 +13,9 @@ export const approveRequest = async (req_id) => {
     return productReq
 }
 
+export const rejectRequest = async (req_id) => {
+    const productReq = await productRequestModel.updateOne({id:req_id},{$set: {status:"Rejected"}})
+    return productReq
+}
+
 
