@@ -27,9 +27,17 @@ const ProductController = (app) => {
 
     const findProductByProductId = async (req, res) => {
         const pid = req.params.pid
-        const product = await productsDao.findProductByProductId(pid)
+        const product = await productsDao.findProductByproductId(pid)
         res.json(product)
     }
+
+    const findProductsByCategory = async (req, res) => {
+        const { category } = req.query;
+        const products = await productsDao.findProductsByCategory(category)
+        res.json(products)
+    }
+
+
     app.post('/api/product', createProduct);
     app.get('/api/product', findAllProducts);
     app.get('/api/product/:pid', findProductByProductId);

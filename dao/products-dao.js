@@ -11,6 +11,11 @@ export const findAllProducts = async () => {
     return product
 }
 
+export const findProductsByCategory = async(category) =>{
+    const products = await productModel.find({category:category})
+    return products
+}
+
 export const findProductByproductId = async (pid) =>
     await productModel.find({ _id: pid })
 
