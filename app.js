@@ -6,6 +6,7 @@ import cors from 'cors'
 import HomeController from "./controllers/home/home-controller.js"
 import AdminController from './controllers/admin/admin-request.js';
 import ProductController from "./controllers/ProductController/products-controller.js";
+import ReviewController from "./controllers/ReviewController/reviews-controller.js";
 import CategoryController from './controllers/category/category-controller.js';
 import ManageProductRequestController from './controllers/home/manage-request.js'
 
@@ -32,4 +33,5 @@ AdminController(app);
 ManageProductRequestController(app);
 ProductController(app);
 CategoryController(app);
+ReviewController(app);
 app.listen(4000);
