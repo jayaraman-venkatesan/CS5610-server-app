@@ -2,6 +2,8 @@ import * as productsDao from '../../dao/products-dao.js';
 import * as usersDao from '../../dao/users-dao.js';
 import axios from 'axios';
 
+import fetch from 'node-fetch';
+
 
 const HomeController = (app) => {
    app.get('/api/products', getProducts)
@@ -11,7 +13,7 @@ const HomeController = (app) => {
 const getProducts = async (req, res) => {
 
    const { user, category } = req.query;
-   const userRes = await usersDao.findUserById(user);
+   // const userRes = await usersDao.findUserById(user);
 
    let props = [{}]
 
@@ -31,13 +33,16 @@ const getProducts = async (req, res) => {
    //    break;
 
    // }
-   const productsFromDb = await productsDao.findAllProducts();
+   // const productsFromDb = await productsDao.findAllProducts();
    const API = !!category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products";
-   axios.get("https://dummyjson.com/products")
-      .then(function (response) {
-         console.log(response.data); // ex.: { user: 'Your User'}
-         res.json(response.data);
-      });
+
+
+   fetch(API)
+      .then(response => response.json())
+      .then((data)=>{res.json(data.products)});
+
+
+
 
 }
 
