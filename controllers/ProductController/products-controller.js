@@ -32,6 +32,7 @@ const ProductController = (app) => {
     }
 
     const findProductsByCategory = async (req, res) => {
+        //TODO:need to check this
         const { category } = req.query;
         const products = await productsDao.findProductsByCategory(category)
         res.json(products)
