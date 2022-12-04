@@ -9,7 +9,11 @@ const schema = mongoose.Schema(
         handle: String,
         lastName: String,
         profImg: String,
-        role: String
+        role: {
+            type:String,
+            enum: ['User', 'Admin', 'Seller'],
+            default: 'User'
+        }
     },
     {
         collection: 'users'
