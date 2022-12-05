@@ -20,9 +20,9 @@ const options = {
   family: 4
 }
 
-// mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
+mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
 
-mongoose.connect('mongodb+srv://vj:76ESzb8OkA6hzL84@cluster0.ax6xlyh.mongodb.net/team52?retryWrites=true&w=majority')
+//mongoose.connect('mongodb+srv://vj:76ESzb8OkA6hzL84@cluster0.ax6xlyh.mongodb.net/team52?retryWrites=true&w=majority')
 
 const app = express()
 

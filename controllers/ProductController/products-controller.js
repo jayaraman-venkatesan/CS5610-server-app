@@ -1,5 +1,6 @@
 import * as productsDao from '../../dao/products-dao.js';
 import axios from "axios";
+import fetch from "node-fetch";
 
 const ProductController = (app) => {
 
@@ -30,18 +31,18 @@ const ProductController = (app) => {
 
     const findProductByProductId = async (req, res) => {
         const pid = req.params.pid
+        console.log(pid)
         const product = await productsDao.findProductByproductId(pid)
         console.log("findProductByProductId >> " + product)
         if (Object.keys(product).length === 0) {
             console.log("findProductByProductId doesnt exist in DB ")
-            console.log(pid)
-            const API =  "https://dummyjson.com/products/"+pid;
-
+            const API = `https://dummyjson.com/products/`+pid
+            console.log(API)
             fetch(API)
-
                 .then(response => response.json())
-
-                .then((data)=>{res.json(data.products)});
+                .then((data)=>{
+                    console.log(data)
+                    res.json(data)});
         } else {
             res.json(product)
         }
@@ -63,7 +64,7 @@ const ProductController = (app) => {
     app.post('/api/products', createProduct);
     app.get('/api/products', findAllProducts);
     app.get('/api/search', findProductsByCategory);
-    app.get('/api/products/:pid', findProductByProductId);
+    app.get('/api/productById/:pid', findProductByProductId);
     app.put('/api/products/:pid', updateProduct);
     app.delete('/api/products/:pid', deleteProduct);
 
