@@ -39,7 +39,9 @@ const getProducts = async (req, res) => {
 
    fetch(API)
       .then(response => response.json())
-      .then((data)=>{res.json(data.products)});
+      .then((data)=>{
+         console.log(data)
+         res.json(data.products)});
 
 
 
