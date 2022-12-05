@@ -12,11 +12,12 @@ const ProductController = (app) => {
         const newProduct = {
             id: new Date().toISOString(),
             ...req.body,
-            "status": "Pending"
+            "status": "Pending",
+            rating: 0
         };
         const folderName = newProduct.id;
         newProduct.thumbnail = await uploadImagesToS3(files.thumbnail[0], folderName)
-        newProduct.images = await Promise.all(files.images.map(async (image) =>
+        newProduct.images = await Promise.all((files.images ?? []).map(async (image) =>
             await uploadImagesToS3(image, folderName)
         ));
         const savedProduct = await productsDao.createProduct(
