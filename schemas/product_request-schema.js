@@ -2,13 +2,12 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.Schema(
     {
-        _id: Number,
         id: String,
-        productID: Number,
+        productID: String,
         productName: String,
         seller: String,
-        Date: String,
-        status:String
+        date: String,
+        status: String
     },
     {
         collection: 'product_request'
