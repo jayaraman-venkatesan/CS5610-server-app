@@ -5,8 +5,11 @@ import cors from 'cors'
 
 import HomeController from "./controllers/home/home-controller.js"
 import AdminController from './controllers/admin/admin-request.js';
+import ProductController from "./controllers/ProductController/products-controller.js";
+import ReviewController from "./controllers/ReviewController/reviews-controller.js";
+import CategoryController from './controllers/category/category-controller.js';
+import ManageProductRequestController from './controllers/home/manage-request.js'
 import UsersController from "./controllers/UsersController/users-controller.js";
-import ProductController from "./controllers/ProductController/product-controller.js";
 
 const options = {
   useNewUrlParser: true,
@@ -18,7 +21,11 @@ const options = {
   family: 4
 }
 
-mongoose.connect('mongodb://localhost:27017/OnlinePropertySearch', options)
+mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
+
+//mongoose.connect('mongodb://localhost:27017/OnlinePropertySearch', options)
+
+//mongoose.connect('mongodb+srv://vj:76ESzb8OkA6hzL84@cluster0.ax6xlyh.mongodb.net/team52?retryWrites=true&w=majority')
 
 const app = express()
 
@@ -26,6 +33,9 @@ app.use(cors())
 app.use(express.json());
 HomeController(app);
 AdminController(app);
+ManageProductRequestController(app);
 ProductController(app);
+CategoryController(app);
+ReviewController(app);
 UsersController(app);
 app.listen(4000);

@@ -6,10 +6,15 @@ const schema = mongoose.Schema(
         _id:String,
         firstName: String,
         lastName: String,
+        role: {
+            type:String,
+            enum: ['User', 'Admin', 'Seller'],
+            default: 'User'
+        },
         userName: String,
         password: String,
         email: String,
-        role: String
+
     },
     {
         collection: 'users'
@@ -18,6 +23,3 @@ const schema = mongoose.Schema(
 
 export default schema;
 
-//handle: String,
-//dateOfBirth: String,
-//profImg: String,

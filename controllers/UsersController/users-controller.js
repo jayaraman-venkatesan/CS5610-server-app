@@ -15,11 +15,12 @@ const UsersController = (app) => {
             return
         }
         console.log("before createuser")
-        const currentUser = await dao.createUser(user)
+        const createdCurrentUser = await dao.createUser(user)
+        currentUser = createdCurrentUser
         console.log("after createuser")
 
         console.log("exiting controller")
-        if(Array.isArray(currentUser))
+        if(Array.isArray(createdCurrentUser))
         {
             console.log("array")
         }
@@ -27,8 +28,8 @@ const UsersController = (app) => {
         {
             console.log("not array")
         }
-        console.log(currentUser);
-        res.json(currentUser)
+        console.log(createdCurrentUser);
+        res.json(createdCurrentUser)
     }
 
     const login = async (req, res) => {
@@ -63,10 +64,14 @@ const UsersController = (app) => {
 
 
     const profile = async (req, res) => {
+        console.log("in profile")
+        console.log(currentUser)
         if (currentUser) {
+            console.log("in profile yes current user")
             res.json(currentUser)
             return
         }
+        console.log("in profile no current user")
         res.sendStatus(403)
     }
 
@@ -74,7 +79,7 @@ const UsersController = (app) => {
     app.post('/api/register', register)
     app.post('/api/login', login)
     app.post('/logout', logout)
-    app.post('/profile', profile)
+    app.post('/api/profile', profile)
 }
 
 export default UsersController

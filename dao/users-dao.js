@@ -17,10 +17,10 @@ export const findByCredentials = (userName,password) => {
 
 }
 export const createUser = (user) =>{
-    console.log("in dao")
+    console.log("in create dao")
     console.log(user)
     const currentUser=usersModel.create(user);
     return currentUser
-    console.log("exiting dao")
+    console.log("exiting create user dao")
 }
 
