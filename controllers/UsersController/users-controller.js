@@ -67,12 +67,13 @@ const UsersController = (app) => {
         console.log("in profile")
         console.log(currentUser)
         if (currentUser) {
-            console.log("in profile yes current user")
+            console.log("in profile yes current user",currentUser)
             res.json(currentUser)
             return
         }
-        console.log("in profile no current user")
-        res.sendStatus(403)
+        const anonymousUser = await dao.findUserById("00000000001");
+        console.log("SENDING ANONYMOUS USER", anonymousUser);
+        res.json(anonymousUser);
     }
 
 

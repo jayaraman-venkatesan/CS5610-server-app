@@ -54,11 +54,9 @@ const ProductController = (app) => {
         console.log("category >> " + category)
         const {data: onlineProducts} = await axios.get(
             "https://mocki.io/v1/3dac7535-7824-40a4-825e-948124e70222");
-        const array = onlineProducts.filter(d => d.category === category);
-        const products = await productsDao.findProductsByCategory(category);
-        console.log(array);
-        console.log(products);
-        res.json([...array, ...products]);
+        let array = onlineProducts.filter(d => d.category === category);
+        let products = await productsDao.findProductsByCategory(category);
+        res.json([...array, ...products].splice(0,3));
     }
 
     app.post('/api/products', createProduct);
