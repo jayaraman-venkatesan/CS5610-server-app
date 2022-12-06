@@ -76,11 +76,35 @@ const UsersController = (app) => {
         res.json(anonymousUser);
     }
 
+    const getDetailsByName = async (req,res) => {
+
+        console.log("test")
+
+        const userName = req.params.username;
+        console.log(userName)
+        let userObj = await dao.findByUsername(userName);
+
+        console.log(userObj)
+        
+        if(userObj.length === 0){
+            res.sendStatus(403);
+            return;
+        }
+    
+        delete userObj[0].password;
+
+        res.json(userObj[0]);
+        return
+
+
+    }
+
 
     app.post('/api/register', register)
     app.post('/api/login', login)
     app.post('/logout', logout)
     app.post('/api/profile', profile)
+    app.get('/api/user/:username',getDetailsByName)
 }
 
 export default UsersController
