@@ -10,36 +10,66 @@ const HomeController = (app) => {
 }
 
 
+const fetchConsolidateProducts = (API,props,res) => {
+
+   console.log(API)
+
+   fetch(API)
+   .then(response => response.json())
+   .then((data)=>{
+      const onlineProductDetails = data.products.map(object=> {
+         return {...object,status:"Approved"}
+      })
+      res.json([...props,...onlineProductDetails])
+      return;
+   });
+}
+
+
 const getProducts = async (req, res) => {
 
    const { user, category } = req.query;
-   // const userRes = await usersDao.findUserById(user);
+
+ 
+   
+
+   const userRes = await usersDao.findUserById(user);
+
+
+
+   if(userRes.length === 0){
+      res.sendStatus(403);
+      return
+   }
+
+   const userDetails = userRes[0];
+
+
 
    let props = [{}]
 
-   // switch(userRes.role){
-   //    case 'Admin': 
-   //    props = await productsDao.find();
-   //    res.json(props);
-   //    return
-   //    break;
-   //    case 'owner': 
-   //    props = await productsDao.findProductsByOwnerId(user);
-   //    res.json(props);
-   //    break;
-   //    default: 
-   //     props = await productsDao.findProductsByStatus("approved");
-   //    res.json(props);
-   //    break;
+   const API = !!category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products?limit=100";
 
-   // }
-   // const productsFromDb = await productsDao.findAllProducts();
-   const API = !!category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products";
+   switch(userDetails.role){
+      case 'Admin': 
+      console.log("user role" , userDetails.role)
+      props = await productsDao.findAllProducts();
+      fetchConsolidateProducts(API,props,res);
+      return
+      case 'Seller': 
+      console.log("user role" , userDetails.role)
+      props = await productsDao.findProductsByOwnerId(user);
+      fetchConsolidateProducts(API,props,res);
+      return;
+      default: 
+      console.log("user role" , userDetails.role)
+      props = await productsDao.findProductsByStatus("Approved");
+      fetchConsolidateProducts(API,props,res);
+      return;
 
+   }
 
-   fetch(API)
-      .then(response => response.json())
-      .then((data)=>{res.json(data.products)});
+ 
 
 
 
