@@ -12,6 +12,7 @@ import ProductController from "./controllers/ProductController/products-controll
 import ReviewController from "./controllers/ReviewController/reviews-controller.js";
 import CategoryController from './controllers/category/category-controller.js';
 import ManageProductRequestController from './controllers/home/manage-request.js'
+import UsersController from "./controllers/UsersController/users-controller.js";
 
 const options = {
   useNewUrlParser: true,
@@ -37,4 +38,5 @@ ManageProductRequestController(app);
 ProductController(app);
 CategoryController(app);
 ReviewController(app);
+UsersController(app);
 app.listen(4000);

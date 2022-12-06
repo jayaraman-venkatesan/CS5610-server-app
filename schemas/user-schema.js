@@ -3,17 +3,18 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.Schema(
     {
-        _id: String,
-        dateOfBirth: String,
+        _id:String,
         firstName: String,
-        handle: String,
         lastName: String,
-        profImg: String,
         role: {
             type:String,
             enum: ['User', 'Admin', 'Seller'],
             default: 'User'
-        }
+        },
+        userName: String,
+        password: String,
+        email: String,
+
     },
     {
         collection: 'users'
