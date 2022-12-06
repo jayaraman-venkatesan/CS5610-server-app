@@ -1,10 +1,12 @@
 import * as dao from './../../dao/users-dao.js'
+import bcrypt from 'bcrypt';
 let currentUser = null
 const UsersController = (app) => {
 
+    const saltRounds = 10;
+
     const register = async (req, res) => {
-        const user = req.body
-        console.log("in controller")
+        let user = req.body
         console.log(user)
         const existingUser = await dao.findByUsername(user.userName)
         console.log("after findbyusername")
@@ -15,6 +17,8 @@ const UsersController = (app) => {
             return
         }
         console.log("before createuser")
+        const hash = await bcrypt.hash(user.password, saltRounds);
+        user.password = hash;
         const createdCurrentUser = await dao.createUser(user)
         currentUser = createdCurrentUser
         console.log("after createuser")
@@ -36,25 +40,21 @@ const UsersController = (app) => {
         const credentials = req.body
         console.log("in controller")
         console.log(credentials)
-        const existingUser = await dao.findByCredentials(credentials.userName,credentials.password)
-        console.log("after existing user call")
-        console.log(existingUser)
-        if (existingUser.length===0) {
-            console.log("no existingUser")
-            res.sendStatus(403)
-            return
+        const user = await dao.findByUsername(credentials.userName)
+        console.log(user)
+        if(user.length === 0){
+            res.sendStatus(403);
+            return;
         }
-        console.log("yes existingUser")
-        currentUser = existingUser[0]
-        if(Array.isArray(existingUser))
-        {
-            console.log("array")
+
+        currentUser = user[0]
+        const match = await bcrypt.compare(credentials.password,currentUser.password);
+        console.log(match)
+        if(!match){
+        res.sendStatus(403);
+        return;
         }
-        else
-        {
-            console.log("not array")
-        }
-        res.json(existingUser[0])
+        res.json(currentUser)
     }
 
     const logout = (req, res) => {
