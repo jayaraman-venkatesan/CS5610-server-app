@@ -6,16 +6,18 @@ export const findAllRequests = async () => {
     return productReq
 }
 
-
-
 export const approveRequest = async (req_id) => {
-    const productReq = await productRequestModel.updateOne({id:req_id},{$set: {status:"Approved"}})
+    const productReq = await productRequestModel.updateOne({ id: req_id }, { $set: { status: "Approved" } })
     return productReq
 }
 
 export const rejectRequest = async (req_id) => {
-    const productReq = await productRequestModel.updateOne({id:req_id},{$set: {status:"Rejected"}})
+    const productReq = await productRequestModel.updateOne({ id: req_id }, { $set: { status: "Rejected" } })
     return productReq
 }
 
+export const createRequest = async (request) => {
+    const productReq = await productRequestModel.create(request)
+    return productReq;
+}
 

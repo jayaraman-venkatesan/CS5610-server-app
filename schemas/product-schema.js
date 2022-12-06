@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.Schema(
     {
-        _id:String,
-        id: Number,
+        id: String,
         title: String,
         description: String,
         price: Number,

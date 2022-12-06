@@ -1,7 +1,10 @@
 import express from 'express';
 import mongoose from "mongoose";
 
-import cors from 'cors'
+import cors from 'cors';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 import HomeController from "./controllers/home/home-controller.js"
 import AdminController from './controllers/admin/admin-request.js';
@@ -21,11 +24,9 @@ const options = {
   family: 4
 }
 
-mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
+// mongoose.connect('mongodb://localhost:27017/OnlineProductSearch', options)
 
-//mongoose.connect('mongodb://localhost:27017/OnlinePropertySearch', options)
-
-//mongoose.connect('mongodb+srv://vj:76ESzb8OkA6hzL84@cluster0.ax6xlyh.mongodb.net/team52?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://vj:76ESzb8OkA6hzL84@cluster0.ax6xlyh.mongodb.net/team52?retryWrites=true&w=majority')
 
 const app = express()
 
