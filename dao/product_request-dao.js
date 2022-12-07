@@ -6,6 +6,11 @@ export const findAllRequests = async () => {
     return productReq
 }
 
+export const findById = async (req_id) => {
+    const productReq = await productRequestModel.find({id:req_id})
+    return productReq
+}
+
 export const approveRequest = async (req_id) => {
     const productReq = await productRequestModel.updateOne({ id: req_id }, { $set: { status: "Approved" } })
     return productReq

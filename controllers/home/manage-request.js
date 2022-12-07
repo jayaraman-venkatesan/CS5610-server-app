@@ -1,4 +1,5 @@
 import * as productReqDao from '../../dao/product_request-dao.js'
+import * as productDao from '../../dao/products-dao.js'
 
 const ManageProductRequestController = (app) => {
     app.get('/api/products/requests', getProductRequests)
@@ -12,10 +13,14 @@ const getProductRequests = async (_req, res) => {
     res.json(prodRequests)
 }
 
+
+
 const approveRequest = async (req, res) => {
     const req_id = req.params.id;
     console.log(req_id)
     const prodRequests = await productReqDao.approveRequest(req_id);
+    const request = await productReqDao.findById(req_id);
+    const productApprove = await productDao.approveProduct(request[0].productID);
     getProductRequests(req,res);
 }
 

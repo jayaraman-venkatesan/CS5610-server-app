@@ -24,3 +24,8 @@ export const createUser = (user) =>{
     console.log("exiting create user dao")
 }
 
+export const updateProfile = (id,user) => {
+    const currentUser=usersModel.updateOne({_id:id},{$set:user});
+    return currentUser
+}
+

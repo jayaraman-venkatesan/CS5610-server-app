@@ -11,6 +11,11 @@ export const findAllProducts = async () => {
     return product
 }
 
+export const approveProduct = async (req_id) => {
+    const productReq = await productModel.updateOne({ id: req_id }, { $set: { status: "Approved" } })
+    return productReq
+}
+
 export const findProductsByCategory = async (category) => {
     const products = await productModel.find({ category: category })
     return products
