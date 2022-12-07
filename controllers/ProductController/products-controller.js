@@ -4,16 +4,23 @@ import { uploadImagesToS3 } from '../../utils/upload-images.util.js';
 import axios from "axios";
 import fetch from "node-fetch";
 import multer from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import * as usersDao from '../../dao/users-dao.js';
 
 const ProductController = (app) => {
 
     const createProduct = async (req, res) => {
         const files = req.files;
+        const username = req.body.username;
+        const user = await usersDao.findByUsername(username)
+        const name = `${user.firstName} ${user.lastName}`;
         const newProduct = {
-            id: new Date().toISOString(),
+            id: uuidv4(),
             ...req.body,
-            "status": "Pending",
-            rating: 0
+            status: "Pending",
+            rating: 0,
+            sellerUsername: username,
+            seller: name
         };
         const folderName = newProduct.id;
         newProduct.thumbnail = await uploadImagesToS3(files.thumbnail[0], folderName)
@@ -21,15 +28,14 @@ const ProductController = (app) => {
             await uploadImagesToS3(image, folderName)
         ));
         const savedProduct = await productsDao.createProduct(
-            { ...newProduct, "status": "Pending" }
+            newProduct
         )
         const productRequest = {
             "id": `REQ-${savedProduct.id}`,
             "date": new Date().toISOString(),
             "productID": savedProduct.id,
             "productName": newProduct.title,
-            // TODO get seller info from users table
-            "seller": "xyz",
+            "seller": newProduct.seller,
             "status": "Pending"
         }
         await productRequestDao.createRequest(productRequest)
@@ -61,7 +67,7 @@ const ProductController = (app) => {
         console.log(pid)
         const product = await productsDao.findProductByproductId(pid)
         console.log("findProductByProductId >> " + product)
-        if (Object.keys(product).length === 0) {
+        if (!product) {
             console.log("findProductByProductId doesnt exist in DB ")
             const API = `https://dummyjson.com/products/` + pid
             console.log(API)
@@ -98,7 +104,7 @@ const ProductController = (app) => {
     app.post('/api/products', upload.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'images', maxCount: 5 }]), createProduct);
     app.get('/api/products', findAllProducts);
     app.get('/api/search', findProductsByCategory);
-    app.get('/api/productById/:pid', findProductByProductId);
+    app.get('/api/products/:pid', findProductByProductId);
     app.put('/api/products/:pid', updateProduct);
     app.delete('/api/products/:pid', deleteProduct);
 

@@ -15,7 +15,8 @@ const schema = mongoose.Schema(
         images: [{
             type: String
         }],
-        owner: String,
+        seller: String,
+        sellerUsername: String,
         status: {
             type: String,
             enum: ['Approved', 'Rejected', 'Pending'],
