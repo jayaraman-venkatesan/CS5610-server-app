@@ -4,7 +4,7 @@ const schema = mongoose.Schema(
     {
         id: String,
         product_id: String,
-        user_id: String,
+        userName: String,
         userFirstName: String,
         userLastName: String,
         comment: String,

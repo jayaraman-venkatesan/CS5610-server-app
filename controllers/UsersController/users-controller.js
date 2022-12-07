@@ -100,9 +100,9 @@ const UsersController = (app) => {
             return;
         }
 
-        delete userObj[0].password;
+        delete userObj.password;
 
-        res.json(userObj[0]);
+        res.json(userObj);
         return
 
 
