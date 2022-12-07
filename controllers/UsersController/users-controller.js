@@ -10,7 +10,7 @@ const UsersController = (app) => {
         console.log(user)
         const existingUser = await dao.findByUsername(user.userName)
         console.log("after findbyusername")
-        if (existingUser.length!==0) {
+        if (existingUser) {
             console.log(existingUser)
             console.log("existing user")
             res.sendStatus(403)
@@ -24,12 +24,10 @@ const UsersController = (app) => {
         console.log("after createuser")
 
         console.log("exiting controller")
-        if(Array.isArray(createdCurrentUser))
-        {
+        if (Array.isArray(createdCurrentUser)) {
             console.log("array")
         }
-        else
-        {
+        else {
             console.log("not array")
         }
         console.log(createdCurrentUser);
@@ -38,23 +36,17 @@ const UsersController = (app) => {
 
     const login = async (req, res) => {
         const credentials = req.body
-        console.log("in controller")
-        console.log(credentials)
         const user = await dao.findByUsername(credentials.userName)
-        console.log(user)
-        if(user.length === 0){
+        if (!user) {
             res.sendStatus(403);
             return;
         }
-
-        currentUser = user[0]
-        const match = await bcrypt.compare(credentials.password,currentUser.password);
-        console.log(match)
-        if(!match){
-        res.sendStatus(403);
-        return;
+        const match = await bcrypt.compare(credentials.password, user.password);
+        if (!match) {
+            res.sendStatus(403);
+            return;
         }
-        res.json(currentUser)
+        res.json(user)
     }
 
     const logout = (req, res) => {
@@ -67,7 +59,7 @@ const UsersController = (app) => {
         console.log("in profile")
         console.log(currentUser)
         if (currentUser) {
-            console.log("in profile yes current user",currentUser)
+            console.log("in profile yes current user", currentUser)
             res.json(currentUser)
             return
         }
@@ -76,7 +68,7 @@ const UsersController = (app) => {
         res.json(anonymousUser);
     }
 
-    const getDetailsByName = async (req,res) => {
+    const getDetailsByName = async (req, res) => {
 
         console.log("test")
 
@@ -85,12 +77,12 @@ const UsersController = (app) => {
         let userObj = await dao.findByUsername(userName);
 
         console.log(userObj)
-        
-        if(userObj.length === 0){
+
+        if (!userObj) {
             res.sendStatus(403);
             return;
         }
-    
+
         delete userObj[0].password;
 
         res.json(userObj[0]);
@@ -99,14 +91,14 @@ const UsersController = (app) => {
 
     }
 
-    const updateProfile = async (req,res) => {
+    const updateProfile = async (req, res) => {
         const userToUpdate = req.params.id;
         const data = req.body;
         console.log(userToUpdate)
         console.log(data)
         const status = await dao.updateProfile(userToUpdate,
             data);
-        res.json(status); 
+        res.json(status);
     }
 
 
@@ -115,7 +107,7 @@ const UsersController = (app) => {
     app.post('/logout', logout)
     app.post('/api/profile', profile)
     app.put('/api/user/update/:id', updateProfile)
-    app.get('/api/user/:username',getDetailsByName)
+    app.get('/api/user/:username', getDetailsByName)
 }
 
 export default UsersController

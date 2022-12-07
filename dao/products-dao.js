@@ -22,7 +22,7 @@ export const findProductsByCategory = async (category) => {
 }
 
 export const findProductByproductId = async (pid) =>
-    await productModel.find({ id: pid })
+    await productModel.findOne({ id: pid })
 
 export const findProductByUsername = async (username) =>
     await productModel.findOne({ username })
