@@ -99,11 +99,22 @@ const UsersController = (app) => {
 
     }
 
+    const updateProfile = async (req,res) => {
+        const userToUpdate = req.params.id;
+        const data = req.body;
+        console.log(userToUpdate)
+        console.log(data)
+        const status = await dao.updateProfile(userToUpdate,
+            data);
+        res.json(status); 
+    }
+
 
     app.post('/api/register', register)
     app.post('/api/login', login)
     app.post('/logout', logout)
     app.post('/api/profile', profile)
+    app.put('/api/user/update/:id', updateProfile)
     app.get('/api/user/:username',getDetailsByName)
 }
 
