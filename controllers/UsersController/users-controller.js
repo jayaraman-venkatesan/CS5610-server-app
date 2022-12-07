@@ -1,5 +1,7 @@
 import * as dao from './../../dao/users-dao.js'
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 let currentUser = null
 const UsersController = (app) => {
 
@@ -46,7 +48,22 @@ const UsersController = (app) => {
             res.sendStatus(403);
             return;
         }
-        res.json(user)
+        const accessToken = jwt.sign({ userName: user.userName }, process.env.JWT_ACCESS_TOKEN_SECRET)
+        res.json({ accessToken })
+    }
+
+    const getUser = async (req, res) => {
+        const accessToken = req.headers?.authorization?.split(' ')[1];
+        if (accessToken) {
+            const { userName } = jwt.verify(accessToken, process.env.JWT_ACCESS_TOKEN_SECRET);
+            if (userName) {
+                const user = await dao.findByUsername(userName);
+                res.json(user);
+                return;
+            }
+        }
+        res.sendStatus(403);
+        return;
     }
 
     const logout = (req, res) => {
@@ -108,6 +125,7 @@ const UsersController = (app) => {
     app.post('/api/profile', profile)
     app.put('/api/user/update/:id', updateProfile)
     app.get('/api/user/:username', getDetailsByName)
+    app.get('/api/user', getUser)
 }
 
 export default UsersController
