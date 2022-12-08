@@ -1,14 +1,13 @@
 import * as reviewsDao from '../../dao/reviews-dao.js';
-import * as productsDao from '../../dao/products-dao.js'
-import fetch from 'node-fetch';
-import ProductController from '../ProductController/products-controller.js';
-import {getProductById} from '../../utils/product.utils.js'
+import { getProductById } from '../../utils/product.utils.js'
+
+import { v4 as uuidv4 } from 'uuid';
 
 const ReviewController = (app) => {
 
     const createReview = async (req, res) => {
-        const newReview = req.body;
-        console.log(newReview);
+        const id = uuidv4()
+        const newReview = { ...req.body, id };
         const actualReview = await reviewsDao.createReview(newReview)
         res.json(actualReview)
     }
@@ -47,8 +46,8 @@ const ReviewController = (app) => {
             res.json(result)
         }
 
-        if(pid){
-            findReviewsByProductId(req,res);
+        if (pid) {
+            findReviewsByProductId(req, res);
         }
 
 
@@ -57,15 +56,15 @@ const ReviewController = (app) => {
     const findReviewsByUserId = async (uid) => {
         console.log(uid)
         const reviews = await reviewsDao.findReviewsByUserId(uid);
-        
-        console.log("reviews",reviews)
+
+        console.log("reviews", reviews)
 
 
 
-        const productMapping = await Promise.all( reviews.map(async (review)=>{
+        const productMapping = await Promise.all(reviews.map(async (review) => {
             const pid = review.product_id;
-            const productDetails =  await getProductById(pid);
-            return {...review.toObject(),product:productDetails}
+            const productDetails = await getProductById(pid);
+            return { ...review.toObject(), product: productDetails }
         }))
 
         // const productMapping2 = await Promise.all( reviews.forEach(async(review)=>{
@@ -77,8 +76,8 @@ const ReviewController = (app) => {
 
         // console.log(productMapping2);
 
-        
-        
+
+
 
         return productMapping;
 
