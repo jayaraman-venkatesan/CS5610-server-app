@@ -1,18 +1,17 @@
 import reviewsModel from "../models/review-model.js";
 
-
-export const findReviewsByUserId = async (s) => await reviewsModel.find({ user_id: s });
+export const findReviewsByUserName = async (s) => await reviewsModel.find({ user_id: s });
 
 export const findAllReviews = async () => {
     const reviews = await reviewsModel.find()
     return reviews
 }
 
-export const findReviewsByProductId = async (product_id) =>
-    await reviewsModel.find({ product_id })
+export const findReviewsByProductId = async (productId) =>
+    await reviewsModel.find({ productId })
 
-export const findReviewByUsername = async (user_id) =>
-    await reviewsModel.findOne({ user_id })
+export const findReviewsByUsername = async (userName) =>
+    await reviewsModel.find({ userName })
 
 export const createReview = async (review) => {
     const actualInsertedReview = await reviewsModel.create(review)

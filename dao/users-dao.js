@@ -2,7 +2,7 @@ import usersModel from "../models/user-model.js";
 
 export const findUsers = () => usersModel.find();
 
-export const findUserById = (uid) => usersModel.find({ _id: uid });
+export const findUserById = (uid) => usersModel.findOne({ _id: uid });
 
 export const findByUsername = (userName) =>
     usersModel.findOne({ userName: userName });

@@ -11,10 +11,6 @@ const ReviewController = (app) => {
         const actualReview = await reviewsDao.createReview(newReview)
         res.json(actualReview)
     }
-    const findAllReviews = async (req, res) => {
-        const reviews = await reviewsDao.findAllReviews()
-        res.json(reviews);
-    }
 
     const updateReview = async (req, res) => {
         const reviewIdToUpdate = req.params.rid;
@@ -28,59 +24,23 @@ const ReviewController = (app) => {
         res.json(status);
     }
 
-    const findReviewsByProductId = async (req, res) => {
-        const pid = req.params.pid
-        const review = await reviewsDao.findReviewsByProductId(pid)
-        res.json(review)
-    }
-
     const findReviewsByID = async (req, res) => {
-
         const { pid } = req.query;
-        const { uid } = req.query;
+        const { userName } = req.query;
+        if (userName) {
+            const reviews = await reviewsDao.findReviewsByUsername(userName);
+            const reviewsWithProductMapping = await Promise.all(reviews.map(async (review) => {
+                const pid = review.productId;
+                const productDetails = await getProductById(pid);
+                return { ...review.toObject(), product: productDetails }
+            }))
 
-        console.log("here uid", uid)
-
-        if (uid) {
-            const result = await (findReviewsByUserId(uid))
-            res.json(result)
+            res.json(reviewsWithProductMapping)
         }
-
         if (pid) {
-            findReviewsByProductId(req, res);
+            const reviews = await reviewsDao.findReviewsByProductId(pid)
+            res.json(reviews)
         }
-
-
-    }
-
-    const findReviewsByUserId = async (uid) => {
-        console.log(uid)
-        const reviews = await reviewsDao.findReviewsByUserId(uid);
-
-        console.log("reviews", reviews)
-
-
-
-        const productMapping = await Promise.all(reviews.map(async (review) => {
-            const pid = review.product_id;
-            const productDetails = await getProductById(pid);
-            return { ...review.toObject(), product: productDetails }
-        }))
-
-        // const productMapping2 = await Promise.all( reviews.forEach(async(review)=>{
-        //     const pid = review.product_id;
-        //     const productDetails =  await getProductById(pid);
-        //     review.product = productDetails;
-        //     // return {review:review,product:productDetails}
-        // }))
-
-        // console.log(productMapping2);
-
-
-
-
-        return productMapping;
-
     }
 
     app.post('/api/reviews', createReview);
