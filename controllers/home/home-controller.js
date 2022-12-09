@@ -10,14 +10,18 @@ const HomeController = (app) => {
 }
 
 
-const fetchConsolidateProducts = (API, props, res) => {
+const fetchConsolidateProducts = (API, props, res, category) => {
+  const filteredProducts=category!=null? props.filter(
+   p=>p.toObject().category===category
+   )
+   :props;
    fetch(API)
       .then(response => response.json())
       .then((data) => {
          const onlineProductDetails = data.products.map(object => {
             return { ...object, status: "Approved" }
          })
-         res.json([...props, ...onlineProductDetails])
+         res.json([...filteredProducts, ...onlineProductDetails])
          return;
       });
 }
@@ -26,31 +30,22 @@ const fetchConsolidateProducts = (API, props, res) => {
 const getProducts = async (req, res) => {
 
    const { user, category } = req.query;
-   const userRes = await usersDao.findUserById(user);
-   if (userRes.length === 0) {
-      res.sendStatus(403);
-      return
-   }
-   const userDetails = userRes[0];
+   const userDetails = await usersDao.findUserById(user);
    let props = [{}]
-
    const API = !!category ? `https://dummyjson.com/products/category/${category}` : "https://dummyjson.com/products?limit=100";
 
-   switch (userDetails.role) {
+   switch (userDetails?.role) {
       case 'Admin':
-         console.log("user role", userDetails.role)
          props = await productsDao.findAllProducts();
-         fetchConsolidateProducts(API, props, res);
+         fetchConsolidateProducts(API, props, res, category);
          return
       case 'Seller':
-         console.log("user role", userDetails.role)
          props = await productsDao.findProductsByOwnerId(user);
-         fetchConsolidateProducts(API, props, res);
+         fetchConsolidateProducts(API, props, res, category);
          return;
       default:
-         console.log("user role", userDetails.role)
          props = await productsDao.findProductsByStatus("Approved");
-         fetchConsolidateProducts(API, props, res);
+         fetchConsolidateProducts(API, props, res, category);
          return;
 
    }

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const schema = mongoose.Schema(
     {
         id: String,
-        product_id: String,
+        productId: String,
         userName: String,
         userFirstName: String,
         userLastName: String,

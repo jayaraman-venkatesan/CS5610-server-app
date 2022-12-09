@@ -13,6 +13,8 @@ import ReviewController from "./controllers/ReviewController/reviews-controller.
 import CategoryController from './controllers/category/category-controller.js';
 import ManageProductRequestController from './controllers/home/manage-request.js'
 import UsersController from "./controllers/UsersController/users-controller.js";
+import UserAddressController from './controllers/user-address/user-address-controller.js';
+import OrderController from './controllers/order/order-controller.js';
 
 const options = {
   useNewUrlParser: true,
@@ -39,4 +41,6 @@ ProductController(app);
 CategoryController(app);
 ReviewController(app);
 UsersController(app);
+UserAddressController(app);
+OrderController(app)
 app.listen(4000);
