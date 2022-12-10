@@ -4,6 +4,10 @@ export const createOrder = async (orderRequest) => {
     return await orderModel.create(orderRequest)
 }
 
-export const getOrderByUserName = async (userName) => {
-    return await orderModel.find({ userName })
+export const getOrdersByUserName = async (userName) => {
+    return await orderModel.find({ userName },{},{ sort: { date: -1 }})
+}
+
+export const cancelOrder = async (orderId) => {
+    return await orderModel.updateOne({ _id:orderId },{ $set: { isCancelled: true } })
 }

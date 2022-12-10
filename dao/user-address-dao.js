@@ -5,6 +5,11 @@ export const findAddressesByUserName = async (userName) => {
     return userAddresses
 }
 
+export const findAddressesById = async (addressId) => {
+    const userAddress = await userAddressModel.findOne({_id: addressId})
+    return userAddress
+}
+
 export const deleteUserAddressById = async (userAddressId) => {
    const status = await userAddressModel.deleteOne({id:userAddressId})
     return status
