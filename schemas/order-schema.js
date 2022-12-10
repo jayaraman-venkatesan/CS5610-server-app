@@ -7,7 +7,13 @@ const schema = mongoose.Schema(
         userName: String,
         quantity: Number,
         addressId: String,
-        deliveryInstruction: String
+        price: Number,
+        deliveryInstruction: String,
+        isCancelled: {
+            type: Boolean,
+            default: false
+        },
+        date: String,
     },
     {
         collection: 'orders'
