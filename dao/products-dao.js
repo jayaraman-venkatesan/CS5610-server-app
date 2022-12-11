@@ -5,6 +5,10 @@ export const findProductsByStatus = async (s) => await productModel.find({ statu
 
 export const findProductsBySellerUsername = async (s) => await productModel.find({ sellerUsername: s });
 
+export const findProductsBySellerUsernameAndCategory = async (sellerUsername, category) =>{ 
+   return await productModel.find({ sellerUsername , category})
+};
+
 
 export const findAllProducts = async () => {
     const product = await productModel.find()
