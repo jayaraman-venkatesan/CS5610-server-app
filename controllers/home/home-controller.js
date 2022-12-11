@@ -11,10 +11,10 @@ const HomeController = (app) => {
 
 
 const fetchConsolidateProducts = (API, props, res, category) => {
-  const filteredProducts=category!=null? props.filter(
-   p=>p.toObject().category===category
+   const filteredProducts = category != null ? props.filter(
+      p => p.toObject().category === category
    )
-   :props;
+      : props;
    fetch(API)
       .then(response => response.json())
       .then((data) => {
@@ -40,7 +40,11 @@ const getProducts = async (req, res) => {
          fetchConsolidateProducts(API, props, res, category);
          return
       case 'Seller':
-         props = await productsDao.findProductsBySellerUsername(userDetails.userName);
+         props = await (
+            category
+               ? productsDao.findProductsBySellerUsernameAndCategory(userDetails.userName, category)
+               : productsDao.findProductsBySellerUsername(userDetails.userName)
+         );
          res.json(props)
          return;
       default:
