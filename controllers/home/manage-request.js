@@ -27,6 +27,8 @@ const approveRequest = async (req, res) => {
 const rejectRequest = async (req, res) => {
     const req_id = req.params.id;
     const prodRequests = await productReqDao.rejectRequest(req_id);
+    const request = await productReqDao.findById(req_id);
+    const productreject = await productDao.rejectProduct(request[0].productID);
     getProductRequests(req,res);
 }
 

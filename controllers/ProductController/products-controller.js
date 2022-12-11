@@ -1,6 +1,6 @@
 import * as productsDao from '../../dao/products-dao.js';
 import * as productRequestDao from '../../dao/product_request-dao.js';
-import { uploadImagesToS3 } from '../../utils/upload-images.util.js';
+import { uploadImagesToAzure } from '../../utils/upload-images.util.js';
 import axios from "axios";
 import fetch from "node-fetch";
 import multer from 'multer';
@@ -23,9 +23,9 @@ const ProductController = (app) => {
             seller: name
         };
         const folderName = newProduct.id;
-        newProduct.thumbnail = await uploadImagesToS3(files.thumbnail[0], folderName)
+        newProduct.thumbnail = await uploadImagesToAzure(files.thumbnail[0], folderName)
         newProduct.images = await Promise.all((files.images ?? []).map(async (image) =>
-            await uploadImagesToS3(image, folderName)
+            await uploadImagesToAzure(image, folderName)
         ));
         const savedProduct = await productsDao.createProduct(
             newProduct

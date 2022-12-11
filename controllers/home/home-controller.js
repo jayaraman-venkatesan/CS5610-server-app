@@ -40,8 +40,8 @@ const getProducts = async (req, res) => {
          fetchConsolidateProducts(API, props, res, category);
          return
       case 'Seller':
-         props = await productsDao.findProductsByOwnerId(user);
-         fetchConsolidateProducts(API, props, res, category);
+         props = await productsDao.findProductsBySellerUsername(userDetails.userName);
+         res.json(props)
          return;
       default:
          props = await productsDao.findProductsByStatus("Approved");

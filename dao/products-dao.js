@@ -3,7 +3,7 @@ import productModel from "../models/product-model.js";
 
 export const findProductsByStatus = async (s) => await productModel.find({ status: s });
 
-export const findProductsByOwnerId = async (s) => await productModel.find({ owner: s });
+export const findProductsBySellerUsername = async (s) => await productModel.find({ sellerUsername: s });
 
 
 export const findAllProducts = async () => {
@@ -15,6 +15,13 @@ export const approveProduct = async (req_id) => {
     const productReq = await productModel.updateOne({ id: req_id }, { $set: { status: "Approved" } })
     return productReq
 }
+
+export const rejectProduct = async (req_id) => {
+    const productReq = await productModel.updateOne({ id: req_id }, { $set: { status: "Rejected" } })
+    return productReq
+}
+
+
 
 export const findProductsByCategory = async (category) => {
     const products = await productModel.find({ category: category })

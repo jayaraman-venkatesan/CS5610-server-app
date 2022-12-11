@@ -1,6 +1,6 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 
-export const uploadImagesToS3 = async (file, folderName) => {
+export const uploadImagesToAzure = async (file, folderName) => {
     const containerName = process.env.STORAGE_ACCOUNT_CONTAINER_NAME;
     // TODO add code to generate the token
     const sasToken = process.env.STORAGE_ACCOUNT_SAS_TOKEN;
