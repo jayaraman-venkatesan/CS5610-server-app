@@ -1,5 +1,7 @@
 import * as  userAddressDao from '../../dao/user-address-dao.js';
 import {validateAuthToken} from '../../middleware/validateAuthToken.middleware.js';
+import * as userDao from '../../dao/users-dao.js'
+
 
 const UserAddressController = (app) => {
     const getUserAddress = async (req, res) => {
@@ -10,6 +12,16 @@ const UserAddressController = (app) => {
 
     const createUserAddress = async (req, res) => {
         const address = await userAddressDao.createUserAddress(req.body);
+        const { userName } = req;
+        const userData = await userDao.findByUsername(userName);
+
+        const newUser = {
+            ...userData,
+            addressIDs : [...(userData.addressIDs??[]),address.id]
+        }
+
+        const updateData = await userDao.updateByUsername(userName,newUser);
+        
         res.json(address);
     }
 

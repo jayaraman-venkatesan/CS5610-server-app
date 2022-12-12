@@ -6,7 +6,7 @@ const schema = mongoose.Schema(
         productId: String,
         userName: String,
         quantity: Number,
-        addressId: String,
+        addressIds: [],
         price: Number,
         deliveryInstruction: String,
         isCancelled: {

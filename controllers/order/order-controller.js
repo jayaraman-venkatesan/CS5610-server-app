@@ -8,13 +8,18 @@ const OrderController = (app) => {
     const getOrders = async (req, res) => {
         const { userName } = req;
         const orders = await orderDao.getOrdersByUserName(userName);
+        console.log("test")
         const orderWithAddressAndProductDetails = await Promise.all(
             orders.map(async (order) => {
-                const userAddress = await userAddressDao.findAddressesById(order.addressId);
+                const addressIds = order.addressIds;
+                const userAddresses = await Promise.all( addressIds.map(async addressId => {
+                    const userAddress = await userAddressDao.findAddressesById(addressId);
+                    return userAddress;
+                }))
                 const product = await getProductById(order.productId);
                 return {
                     ...order.toObject(),
-                    userAddress,
+                    userAddresses,
                     product
                 }
             }

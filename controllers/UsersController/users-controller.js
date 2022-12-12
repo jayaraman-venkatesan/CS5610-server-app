@@ -17,7 +17,7 @@ const UsersController = (app) => {
             console.log("existing user")
             res.sendStatus(403)
             return
-        }
+        } 
         console.log("before createuser")
         const hash = await bcrypt.hash(user.password, saltRounds);
         user.password = hash;

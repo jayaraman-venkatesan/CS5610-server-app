@@ -13,10 +13,13 @@ const ProductController = (app) => {
         const files = req.files;
         const username = req.body.username;
         const user = await usersDao.findByUsername(username)
+        console.log(user )
         const name = `${user.firstName} ${user.lastName}`;
+        const categories = req.body.category.split(',')
         const newProduct = {
             id: uuidv4(),
             ...req.body,
+            categories:categories,
             status: "Pending",
             rating: 0,
             sellerUsername: username,

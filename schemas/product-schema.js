@@ -10,7 +10,7 @@ const schema = mongoose.Schema(
         rating: Number,
         stock: Number,
         brand: String,
-        category: String,
+        categories: [],
         thumbnail: String,
         images: [{
             type: String

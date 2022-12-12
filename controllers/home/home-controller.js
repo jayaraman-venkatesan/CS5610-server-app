@@ -12,15 +12,18 @@ const HomeController = (app) => {
 
 const fetchConsolidateProducts = (API, props, res, category) => {
    const filteredProducts = category != null ? props.filter(
-      p => p.toObject().category === category
+      p => p.toObject().categories.includes(category)
    )
       : props;
    fetch(API)
       .then(response => response.json())
       .then((data) => {
          const onlineProductDetails = data.products.map(object => {
-            return { ...object, status: "Approved" }
+            console.log("OPDs",object)
+
+            return { ...object, status: "Approved",categories:[object.category] }
          })
+
          res.json([...filteredProducts, ...onlineProductDetails])
          return;
       });
@@ -40,12 +43,9 @@ const getProducts = async (req, res) => {
          fetchConsolidateProducts(API, props, res, category);
          return
       case 'Seller':
-         props = await (
-            category
-               ? productsDao.findProductsBySellerUsernameAndCategory(userDetails.userName, category)
-               : productsDao.findProductsBySellerUsername(userDetails.userName)
-         );
-         res.json(props)
+         props = await productsDao.findProductsBySellerUsername(userDetails.userName)
+         const filteredProducts = category ? props.filter(product=>product.categories.includes(category)) : props;
+         res.json(filteredProducts)
          return;
       default:
          props = await productsDao.findProductsByStatus("Approved");
