@@ -12,15 +12,7 @@ const UserAddressController = (app) => {
 
     const createUserAddress = async (req, res) => {
         const address = await userAddressDao.createUserAddress(req.body);
-        const { userName } = req;
-        const userData = await userDao.findByUsername(userName);
 
-        const newUser = {
-            ...userData,
-            addressIDs : [...(userData.addressIDs??[]),address.id]
-        }
-
-        const updateData = await userDao.updateByUsername(userName,newUser);
         
         res.json(address);
     }
