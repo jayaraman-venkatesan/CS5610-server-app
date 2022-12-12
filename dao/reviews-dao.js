@@ -23,5 +23,5 @@ export const deleteReview = async (rid) => {
 }
 
 export const updateReview = async (rid, reviewUpdates) =>
-    await reviewsModel.updateOne({ _id: rid },
+    await reviewsModel.updateOne({ id: rid },
         { $set: reviewUpdates })

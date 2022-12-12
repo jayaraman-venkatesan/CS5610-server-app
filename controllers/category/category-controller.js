@@ -5,7 +5,7 @@ const CategoryController = (app) => {
         const { data: externalApiCategories } = await axios.get("https://dummyjson.com/products/categories");
         res.json(externalApiCategories);
     }
-    app.get('/api/products/categories', getCategories);
+    app.get('/api/product-categories', getCategories);
 }
 
 export default CategoryController;

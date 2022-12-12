@@ -71,14 +71,14 @@ const ProductController = (app) => {
         const product = await productsDao.findProductByproductId(pid)
         console.log("findProductByProductId >> " + product)
         if (!product) {
-            console.log("findProductByProductId doesnt exist in DB ")
+            console.log("findProductByProductId doesn't exist in DB ")
             const API = `https://dummyjson.com/products/` + pid
             console.log(API)
             fetch(API)
                 .then(response => response.json())
                 .then((data) => {
                     console.log(data)
-                    res.json(data)
+                    res.json({...data, categories: [data.category]})
                 });
         } else {
             res.json(product)
